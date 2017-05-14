@@ -13,6 +13,10 @@ We will focus on a modified version of the [PaySim dataset on Kaggle](https://ww
 A methodical EDA (exploratory data analysis) is comprised of four steps.
 
 1. The first of these steps involves loading the data into memory and storing it in a dataframe. When a dataset does not fit into memory there are alternative methods of doing this - though I am unsure of what those are.
+df = pd.read_csv('train.csv')
+# making dataframe df from 'train' dataset
+# completes step 1 of a methodical EDA
+
 2. In step two we will make the data set a "tidy data" set by following the guidelines established by [Hadley Wickham](http://vita.had.co.nz/papers/tidy-data.html)
 3. Step three will use descriptive statistics and exploratory visualizations to understand the data at a macro level
 4. In step four we will aggregate the data and explore the group properties in a much more detailed manner
