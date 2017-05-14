@@ -30,6 +30,7 @@ df.head()
 # curious as to the content of the data set
 ```
 # Why look at the head of the data set?
+
 I chose to begin step two of my EDA, tidying up the data set, by looking at the head of the data frame. In doing this I can take a look at my column headers as well as the first 5 results where I am looking for the presence of the 3 indicators of a tidy data set:
 
 1. Each variable forms a column
@@ -506,3 +507,4 @@ avg / total       1.00      1.00      1.00    509009
 
 As you can see above my train/test/full data set results were very respectable.  However, instead of a pipeline what I developed was a pipe bomb as results, when submitted for scores were terrible.   Submitting my version 6 .csv resulted in a 0.684476 public leaderboard score and a 0.659461 private leaderboard score. These two scores would lead me back to the drawing board but all is not lost.  I've lots of pieces and parts that have provided great results.  Pre pipeline my model was scoring in a consevative manner as highlighted by the confusiion matrix and this is veyr important in the pursuit of reducing financial fraud.  We may be making a few extra coutesy calls to confirm transactions because of the false positives but in the case of people's personal finances we want to err on side of caution.  Some further tweaking to perfect a proper pipeline and we'll be in business!     
 
+![algo](https://cloud.githubusercontent.com/assets/22734960/26038813/8801ac88-38de-11e7-99c6-12e2ee7324d5.jpeg)
