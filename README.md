@@ -136,6 +136,32 @@ By looking at the below visualizations we can learn from our data the following:
 
 4. In step four we will aggregate the data and explore the group properties in a much more detailed manner
 
+### What can we learn from our micro level analysis?
+
+By looking at the below visualizations and tables we can learn from our data the following:
+
+- There were 276 fraudulent transactions of the Cash_Out type with a mean amount of 1,587,794 in local currency.  Half of all fraudulent transactions of this type were in the amount of 407,495
+- There were 300 fraudulent transactions of the Transfer type with a mean amount of 1,484,329 in local currency.  Half of all fraudulent transactions of this type were in the amount of 463,901
+- Only 130 (47%) fruadulent transactions were below 100,000
+- New balances for the destination accounts were 0 75% of the time for the fraudulent Transfer transaction types.  curious 
+
+```markdown
+df.groupby(['isFraud', 'type']).describe()
+# looking at data by transaction type and fraudulent or not
+
+df.groupby(['type', df.amount < 100000]).isFraud.value_counts().unstack()
+# determining fraudulent transactions over $100,000
+
+pd.crosstab(df.type, df.isFraud).plot.bar()
+# completes step 4 of a methodical EDA
+```
+### What is my data coupled with my intuition telling me the story is here?
+A typical fruadulent account is not frequent in nature occuring only about .1% of the all transactions.  When a fraudulent transaction ois successful however it is devistanting, draining it's victim's account balance to $0 in nealry every case.  The average fruadulent transaction amount being 1.5 million.  Of the 5 transaction types the two that are most susceptible are Cash Out and Transfer transactions.  The risk of a fraudulent Transfer transaction taking place actually increases to 1 percent.  Interestingly the ending balance on the destination accounts on Cash Out transactions seemingly represents the increase for the fruadulent funds deposited where in the case of the Transfer transactions the funds seem to disappear.  
+
+
+![code](https://cloud.githubusercontent.com/assets/22734960/26038017/573db03a-38cd-11e7-8b63-2144503ad75c.jpeg)
+
 ## Data Preprocessing
+
 
 
