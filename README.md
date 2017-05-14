@@ -176,7 +176,8 @@ Preprocessing of the data to get it in a pipe-ready state will be taken care of 
 - Organizes into 50 kmenas clusters
 - Gets dummies
 - Makes Feature list
-The script that preprocesses the train.csv file is titled paysim_preprocess_train.py while the file used to preprocess is titled paysim_preprocess_test.py.  Below is the entirty of the train script for your enjoyment.
+
+The script that preprocesses the train.csv file is titled paysim_preprocess_train.py while the file used to preprocess is titled paysim_preprocess_test.py.  Below is the entirety of the train script for your enjoyment.
 
 ```markdown
 def preprocess_train():
