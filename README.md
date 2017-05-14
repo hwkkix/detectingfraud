@@ -8,7 +8,6 @@ We will focus on a modified version of the [PaySim dataset on Kaggle](https://ww
 
 ![eye](https://cloud.githubusercontent.com/assets/22734960/26037132/1547440a-38bb-11e7-9616-59c5651b1d34.png)
 
-
 ## An Exploratory Data Analysis
 
 A methodical EDA (exploratory data analysis) is comprised of four steps.
@@ -163,7 +162,7 @@ pd.crosstab(df.type, df.isFraud).plot.bar()
 
 A typical fraudulent account is not frequent in nature occuring only about .1% of the all transactions.  When a fraudulent transaction ois successful however it is devistanting, draining it's victim's account balance to $0 in nearly every case.  The average fruadulent transaction amount being 1.5 million.  Of the 5 transaction types the two that are most susceptible are Cash Out and Transfer transactions.  The risk of a fraudulent Transfer transaction taking place actually increases to 1 percent.  Interestingly the ending balance on the destination accounts on Cash Out transactions seemingly represents the increase for the fraudulent funds deposited where in the case of the Transfer transactions the funds seem to disappear.  
 
-![code](https://cloud.githubusercontent.com/assets/22734960/26038017/573db03a-38cd-11e7-8b63-2144503ad75c.jpeg)
+![investigation](https://cloud.githubusercontent.com/assets/22734960/26038261/59b1b762-38d2-11e7-98ab-08c6b98431b8.png)
 
 ## Data Preprocessing
 
