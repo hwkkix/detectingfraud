@@ -237,3 +237,4 @@ def preprocess_train():
     return df
   ```  
 
+![script](https://cloud.githubusercontent.com/assets/22734960/26038240/bb6aa050-38d1-11e7-8373-13b7b7feb587.jpeg)
