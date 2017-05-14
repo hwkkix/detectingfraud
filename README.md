@@ -443,8 +443,66 @@ In order to compare the private leaderboard results for my final model (model 4)
 Though not perfect, this model pleases me to the point it could be productionalized for now while further enhancements are gained. Some of the methods I would use to further drive up the precision of my model4 would include: binning of my numerical features, generating polynomial features and reducing my data dimensions using PCA. Alas, the boss is here and wants to deploy sometime - asap.
 Now we need to build a pipeline......
 
-
+![pipe](https://cloud.githubusercontent.com/assets/22734960/26038650/28c8d9b0-38db-11e7-9736-0a5ec2a59bf2.jpeg)
 
 ## Building a pipeline 
 
+My pipleine is a very simple version as it is my first attempt - and it shows.  Though the pipe (the name of my pipeline) scored very well on the split train/test data set and the entire train data set, when let loose into the wild and applied to the test set the scored plummmeted.  I did not go back and correct it - yet - but rather chose to celebrate that it executes and focus on my gitpage.  All in all, just creating my first pipeline at all was a win in my book.
+
+Below is the code detailing my attempts:
+
+```markdown
+pipe = make_pipeline(LinearSVC(C=1.93069772888, random_state=0))
+pipe.fit(train[features], train.isFraud)
+# establishing pipeline that incorporates PCA and Linear SVM model
+Pipeline(steps=[('linearsvc', LinearSVC(C=1.93069772888, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=0, tol=0.0001,
+     verbose=0))])
+     
+trainscore = pipe.score(train[features], train.isFraud)
+print(70*"#")
+print("Pipeline model accuracy score on training data set: %s" % (trainscore))
+print(70*"#")
+# Scoring the pipe on train
+######################################################################
+Pipeline model accuracy score on training data set: 0.999236260673
+######################################################################
+
+testscore = pipe.score(test[features], test.isFraud)
+print(70*"#")
+print("Pipeline model accuracy score on testing data set: %s" % (testscore))
+print(70*"#")
+# Scoring the pipe on test
+######################################################################
+Pipeline model accuracy score on testing data set: 0.999204337832
+######################################################################
+
+fullscore = pipe.score(df[features], df.isFraud)
+print(70*"#")
+print("Pipeline model accuracy score on the full data set: %s" % (fullscore))
+print(70*"#")
+# Scoring the pipe on full data set
+######################################################################
+Pipeline model accuracy score on the full data set: 0.999229876093
+######################################################################
+
+confusion_matrix(df.isFraud, pipe.predict(df[features]))
+# Recall for not Fraud = 508325/508350 = 99.9%
+# Recall for is Fraud = 292/669 = 44%
+# Precision for not Fraud = 508325/508702 = 99.9%
+# Precision for is Fraud = 292/307 = 95%
+array([[508325,     15],
+       [   377,    292]])
+       
+print(classification_report(df.isFraud, pipe.predict(df[features])))
+           precision    recall  f1-score   support
+
+          0       1.00      1.00      1.00    508340
+          1       0.95      0.44      0.60       669
+
+avg / total       1.00      1.00      1.00    509009
+```
+
+As you can see above my train/test/full data set results were very respectable.  However, instead of a pipeline what I developed was a pipe bomb as results, when submitted for scores were terrible.   Submitting my version 6 .csv resulted in a 0.684476 public leaderboard score and a 0.659461 private leaderboard score. These two scores would lead me back to the drawing board but all is not lost.  I've lots of pieces and parts that have provided great results.  Pre pipeline my model was scoring in a consevative manner as highlighted by the confusiion matrix and this is veyr important in the pursuit of reducing financial fraud.  We may be making a few extra coutesy calls to confirm transactions because of the false positives but in the case of people's personal finances we want to err on side of caution.  Some further tweaking to perfect a proper pipeline and we'll be in business!     
 
