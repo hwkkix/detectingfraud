@@ -71,7 +71,9 @@ df.head()
 3. Step three will use descriptive statistics and exploratory visualizations to understand the data at a macro level
 
 ### What can we learn from our tabular analysis?
+
 By looking at crosstab tables (an example of one is below) we can learn from our data the following:
+
 - There are 445,383 observations none of which have null values
 - 576 transactions were fraudulant (276 cash_out & 300 transfer)
 - There are 5 different transaction types for us to take into account.  The msot frequest of these transaction types is the Cash_Out type.
@@ -127,7 +129,9 @@ pd.crosstab(df.type, df.amount == 0, values=df.amount, aggfunc=np.mean)
 # Looking at average transaction amount by transaction type
 ```
 ### What can we learn from our analysis through visualization?
+
 By looking at the below visualizations we can learn from our data the following:
+
 - Due to the disparity in our data the ability to zoom offered through plotly is exeremely helpful here.  At the greatest zoom many of these charts are difficult to analyze.
 - Graphics slowed my notebook and they need some further work
 - Though large in transaction size the fraudulent transactions were not large in number
@@ -156,12 +160,79 @@ pd.crosstab(df.type, df.isFraud).plot.bar()
 # completes step 4 of a methodical EDA
 ```
 ### What is my data coupled with my intuition telling me the story is here?
-A typical fruadulent account is not frequent in nature occuring only about .1% of the all transactions.  When a fraudulent transaction ois successful however it is devistanting, draining it's victim's account balance to $0 in nealry every case.  The average fruadulent transaction amount being 1.5 million.  Of the 5 transaction types the two that are most susceptible are Cash Out and Transfer transactions.  The risk of a fraudulent Transfer transaction taking place actually increases to 1 percent.  Interestingly the ending balance on the destination accounts on Cash Out transactions seemingly represents the increase for the fruadulent funds deposited where in the case of the Transfer transactions the funds seem to disappear.  
 
+A typical fraudulent account is not frequent in nature occuring only about .1% of the all transactions.  When a fraudulent transaction ois successful however it is devistanting, draining it's victim's account balance to $0 in nearly every case.  The average fruadulent transaction amount being 1.5 million.  Of the 5 transaction types the two that are most susceptible are Cash Out and Transfer transactions.  The risk of a fraudulent Transfer transaction taking place actually increases to 1 percent.  Interestingly the ending balance on the destination accounts on Cash Out transactions seemingly represents the increase for the fraudulent funds deposited where in the case of the Transfer transactions the funds seem to disappear.  
 
 ![code](https://cloud.githubusercontent.com/assets/22734960/26038017/573db03a-38cd-11e7-8b63-2144503ad75c.jpeg)
 
 ## Data Preprocessing
 
+Preprocessing of the data to get it in a pipe-ready state will be taken care of by two scripy files - the first for training the data set and the second for the test data for whc=ich we want to make predictions upon.  The only difference between the two spripts will be an indexing of dataframes where the training script accounts for the 'isFraud' column which is the column upon which we train the model on.  Of course the test set will be lacking this column as the entire goal is to predict the value that goes in the column.  The steps (in order) that both scripts take otherwise are as follows:
+- Imports pandas as .pd, asks for file path and file name, 1mports .csv file, and creates pandas data frame.
+- Splits 'nameDest' to retain letter
+- Drops unneeded columns
+- Gets dummies
+- Makes Feature list
+- Organizes into 50 kmenas clusters
+- Gets dummies
+- Makes Feature list
+The script that preprocesses the train.csv file is titled paysim_preprocess_train.py while the file used to preprocess is titled paysim_preprocess_test.py.  Below is the entirty of the train script for your enjoyment.
 
+```markdown
+def preprocess_train():
+    """
+    preprocess()
+
+    Imports pandas as .pd, asks for file path and file name, 1mports .csv file, and creates pandas data frame.
+    Splits 'nameDest' to retain letter
+    Drops unneeded columns
+    Gets dummies
+    Makes Feature list
+    Organizes into 50 kmenas clusters
+    Gets dummies
+    Makes Feature list
+
+    Parameters
+    ----------
+    file path:
+        local address of file
+    file name:
+        name of file with extension
+
+    Returns
+    -------
+    out: data frame
+        A Pandas data frame as df
+
+    Examples
+    --------
+    >>> preprocess()
+        What is your file path? C:\\Users\\DN\\hwkkix\\data820\\assignments\\assignment-03\\data\\
+        What is your file name with extension? 1.csv
+    >>> Thanks for helping store your file path and name! Enjoy your new dataframe
+    """
+    import pandas as pd
+    path = input('What is your file path? ')
+    file = input('What is your file name with extension? ')
+    print('Thanks for helping store your file path and name! Enjoy your new dataframe ')
+    df = pd.read_csv(path+file)
+    df['Recipient'] = df['nameDest'].str[:1]
+    df = df.ix[:, [0, 1, 2, 4, 5, 7, 8, 9,11]]
+    df.amount = np.log1p(df.amount)
+    df.oldbalanceOrg = np.log1p(df4.oldbalanceOrg)
+    df.newbalanceOrig = np.log1p(df.newbalanceOrig)
+    df.oldbalanceDest = np.log1p(df.oldbalanceDest)
+    df.newbalanceDest = np.log1p(df.newbalanceDest)
+    df.step = np.log1p(df.step)
+    df = pd.get_dummies(df, prefix='was', prefix_sep='_')
+    features = list(set(df.columns) - {'isFraud'})
+    kmeans = KMeans(n_clusters=50, random_state=0, n_jobs=-1)
+    kmeans.fit(df[features])
+    predictedLabels = kmeans.predict(df[features])
+    df['predictedCluster'] = predictedLabels
+    df['predictedCluster'] = df.predictedCluster.astype('object')
+    df = pd.get_dummies(df, prefix='was', prefix_sep='_')
+    features = list(set(df.columns) - {'isFraud'})
+    return df
+  ```  
 
