@@ -68,11 +68,10 @@ df.head()
 # confirming my changes
 # completes step 2 of a methodical EDA
 ```
-
 3. Step three will use descriptive statistics and exploratory visualizations to understand the data at a macro level
 
 ### What can we learn from our tabular analysis?
-By looking at the below tables we can learn from our data the following:
+By looking at crosstab tables (an example of one is below) we can learn from our data the following:
 - There are 445,383 observations none of which have null values
 - 576 transactions were fraudulant (276 cash_out & 300 transfer)
 - There are 5 different transaction types for us to take into account.  The msot frequest of these transaction types is the Cash_Out type.
@@ -111,6 +110,28 @@ pd.crosstab(df.type, df.isFraud == 1)
 |  DEBIT   | 2933   | 0 |
 | PAYMENT  | 150954 | 0 |
 | TRANSFER | 36761  | 300 |
+
+pd.crosstab(df.type, df.newbalanceOrig == 0.0)
+# '''Looking at post transfer balances equal to $0
+# of orgin accounts by transaction type'''
+
+d.crosstab(df.type, df.newbalanceDest == 0.0)
+# '''Looking at post transfer balances equal to $0
+# of destination accounts by transaction type'''
+
+pd.crosstab(df.type, df.oldbalanceDest == df.newbalanceDest)
+# '''Looking for destination accounts having pre
+# and post transaction balances equal to each other'''
+
+pd.crosstab(df.type, df.amount == 0, values=df.amount, aggfunc=np.mean)
+# Looking at average transaction amount by transaction type
+```
+### What can we learn from our analysis through visualization?
+By looking at the below visualizations we can learn from our data the following:
+- Due to the disparity in our data the ability to zoom offered through plotly is exeremely helpful here.  At the greatest zoom many of these charts are difficult to analyze.
+- Graphics slowed my notebook and they need some further work
+- Though large in transaction size the fraudulent transactions were not large in number
+
 
 
 
