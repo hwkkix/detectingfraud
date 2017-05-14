@@ -17,6 +17,7 @@ A methodical EDA (exploratory data analysis) is comprised of four steps.
 3. Step three will use descriptive statistics and exploratory visualizations to understand the data at a macro level
 4. In step four we will aggregate the data and explore the group properties in a much more detailed manner
 
+![code](https://cloud.githubusercontent.com/assets/22734960/26037302/7595a970-38be-11e7-85fe-37c8b98739bb.jpeg)
 
 
 ## Data Preprocessing
