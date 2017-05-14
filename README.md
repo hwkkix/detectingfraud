@@ -103,13 +103,16 @@ dtype: int64
 
 pd.crosstab(df.type, df.isFraud == 1)
 # Looking at transaction types for fraudulent transactions
-isFraud|False|True
-type		
-CASH_IN|97801|0
-CASH_OUT|156358|276
-DEBIT|2933|0
-PAYMENT|150954|0
-TRANSFER|36761|300
+| isFraud  | False  | True |
+| -------  | -----  | --- |
+| type|
+| CASH_IN  | 97801  | 0 |
+| CASH_OUT | 156358 | 276 |
+|  DEBIT   | 2933   | 0 |
+| PAYMENT  | 150954 | 0 |
+| TRANSFER | 36761  | 300 |
+
+
 
 4. In step four we will aggregate the data and explore the group properties in a much more detailed manner
 
