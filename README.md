@@ -442,3 +442,9 @@ So - my issue with not performing well on the private leaderboard resides in the
 In order to compare the private leaderboard results for my final model (model 4) and that of my best model showing (model) I've calculated the confusion matrix for my model. There is not doubt in my mind now why the private leaderboard performance is so different are this exercise.
 Though not perfect, this model pleases me to the point it could be productionalized for now while further enhancements are gained. Some of the methods I would use to further drive up the precision of my model4 would include: binning of my numerical features, generating polynomial features and reducing my data dimensions using PCA. Alas, the boss is here and wants to deploy sometime - asap.
 Now we need to build a pipeline......
+
+
+
+## Building a pipeline 
+
+
