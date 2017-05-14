@@ -392,5 +392,53 @@ LinearSVC(C=1.93069772888, class_weight=None, dual=True, fit_intercept=True,
 
 The resulting coefficients are visualized as such:
 
+![coeff](https://cloud.githubusercontent.com/assets/22734960/26038558/51261154-38d9-11e7-8263-4f67a33ef5e1.png)
+
+So this model could be titled "A Tale of Two Cities." On the one hand my public leaderboard score has improved to that of a 0.992386 - leaving only the slightest of margins for conitnued improvement and my best result yet. My private leaderboard rating however was a 0.984878 which is outperformed by the Random Forest models. Interesting. Additionally on the negative side would be a general lack of understanding of the SVM model coefficients. I can visualize them for you but I cannot - as of yet - explain them to an extent that pleases me. I do take comfort in the fact that this seems to be a common trait with us aspiring data scientists. This provides me a place to continue my learning and for now I shall move forward.
+So, in the spirit of moving forward I need to figure out why my model scores less successfully on the private leaderboard which uses the AUC as it's success parameter. I'd like to ignore it but it is a more important measure and worthy of better understanding.
+
+Using a confusion matrix and confusion report to compare the Linear SVC and Random Forest models it was clear where there is still work to do with respect to the SVC.
+
+```markdown
+confusion_matrix(df4.isFraud, model4.predict(df4[features4]))
+# Recall for not Fraud = 507771/508340 = 99.9%
+# Recall for is Fraud = 578/669 = 86.4%
+# Precision for not Fraud = 507771/507862 = 99.9%
+# Precision for is Fraud = 578/1147 = 50.3%
+array([[507771,    569],
+       [    91,    578]])
+       
+print(classification_report(df4.isFraud, model4.predict(df4[features4])))
+# Whoa - not a good precision
+# This could explain the poor private leaderboard score
+            precision    recall  f1-score   support
+
+          0       1.00      1.00      1.00    508340
+          1       0.50      0.86      0.64       669
+
+avg / total       1.00      1.00      1.00    509009
 
 
+confusion_matrix(df1.isFraud, model.predict(df1[features1]))
+# Recall for not Fraud = 508340/508340 = 100%
+# Recall for is Fraud = 669/669 = 100%
+# Precision for not Fraud = 508340/508340 = 100%
+# Precision for is Fraud = 669/669 = 100%
+array([[508340,      0],
+       [     0,    669]])
+ 
+print(classification_report(df1.isFraud, model.predict(df1[features1])))
+# Wow - what a great result
+# This could explain the excellent private leaderboard score 
+            precision    recall  f1-score   support
+
+          0       1.00      1.00      1.00    508340
+          1       1.00      1.00      1.00       669
+
+avg / total       1.00      1.00      1.00    509009
+```
+
+So - my issue with not performing well on the private leaderboard resides in the poor performance in my model prediticng too many false positives. There are far too many and the model needs to be further groomed to address it but it is erring on the correct side of the equation. This means we as a financial institution would perhaps make more coutesy calls verifying the appropriateness of the transactions prior to them being executed. Some people will balk at the intrusion but my preference it to err on the side of conservatism until further model improvements can be gained.
+In order to compare the private leaderboard results for my final model (model 4) and that of my best model showing (model) I've calculated the confusion matrix for my model. There is not doubt in my mind now why the private leaderboard performance is so different are this exercise.
+Though not perfect, this model pleases me to the point it could be productionalized for now while further enhancements are gained. Some of the methods I would use to further drive up the precision of my model4 would include: binning of my numerical features, generating polynomial features and reducing my data dimensions using PCA. Alas, the boss is here and wants to deploy sometime - asap.
+Now we need to build a pipeline......
