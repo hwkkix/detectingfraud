@@ -132,8 +132,7 @@ By looking at the below visualizations we can learn from our data the following:
 - Graphics slowed my notebook and they need some further work
 - Though large in transaction size the fraudulent transactions were not large in number
 
-
-
+![chart](https://cloud.githubusercontent.com/assets/22734960/26038010/07674f94-38cd-11e7-8093-e46f0dd2d42f.jpg)
 
 4. In step four we will aggregate the data and explore the group properties in a much more detailed manner
 
