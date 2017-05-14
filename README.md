@@ -237,3 +237,30 @@ def preprocess_train():
   ```  
 
 ![script](https://cloud.githubusercontent.com/assets/22734960/26038240/bb6aa050-38d1-11e7-8373-13b7b7feb587.jpeg)
+
+## Developing a predictive model
+
+My efforts revolved around the development of two different model types (Random Forrest and Linear SVC), a couple of different scaling strategies, some of the available feature enginnering techniques and different cross-validation methods.  All of these tools were mixed and matched, swapped and switched, changed and exchanged for a total of 21 different submissions.  Of these 21 submissions, 9 of them score 87% or higher on both the public and private leader boards.  Though I did not end atop with of the boards with my submissions I was within .004% of the to score with my best attempt.  I also have 5 of the 10 top scores on the private leader board and so despite my slow start due to mistakes in my early code, I am very pleased with the end result.
+
+In my file Project Final.ipynb found on the repo you will find the 115 or so code cells that document just a portion of the attempts but if you take the time to review it you will get a good idea of what transpired.  Many of those efforts were of the Random Forrest type and they provided some of the best leaderboard results.  They however did not proivde the best results.  Those were born of a Linear SVC and will be the detailed below.
+
+I will take moment to highlight my preference of the Random Forrest model.  It not only preformed my more consistantly on the private leaderboard, it gives you much better visibility into feature importance.  Below is the feature ranking from my favorite model of them all - a random forest.  
+
+I'm rather pleased with my simple Random Forest model utilizing k means feature engineering and a k folds cross validation strategy.  The features driving this model are (in order of importance):
+ 
+Feature ranking:
+1. 'newbalanceDest' (0.247011)
+2. 'oldbalanceOrg' (0.226982)
+3. 'amount' (0.155077)
+4. 'step' (0.104939)
+5. 'oldbalanceDest' (0.073532)
+6. 'was_TRANSFER' (0.064203)
+7. 'oldbalanceDest' (0.048071)
+8. 'was_CASH_OUT' (0.026618)
+9. 'was_CASH_IN' (0.017521)
+10. 'was_11' (0.009711)
+ 
+This model did score very high on the public leaderboard putting me at the number one spot with a 0.98416!  I noticed too that of the top models on the private board this model was the only one that had a higher rating on the private board than it had on the public board with a 0.987466.  Even when the model fell from the top spot I still took pride in this fact.
+
+
+
