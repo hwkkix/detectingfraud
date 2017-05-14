@@ -69,41 +69,50 @@ df.head()
 # completes step 2 of a methodical EDA
 ```
 
-
 3. Step three will use descriptive statistics and exploratory visualizations to understand the data at a macro level
+
+### What can we learn from our tabular analysis?
+By looking at the below tables we can learn from our data the following:
+- There are 445,383 observations none of which have null values
+- 576 transactions were fraudulant (276 cash_out & 300 transfer)
+- There are 5 different transaction types for us to take into account.  The msot frequest of these transaction types is the Cash_Out type.
+- Out of the 445,383 transactions we have 445,338 unique customers originating the transaction.  This means we have 45 repeat originators.  However, of these repeat originators none appear more than twice.
+- The mean transaction amount was 178,918 with the largest transaction being 60,642,000.
+- 50% of origin account new balances are 0, indicating they were drained, be it on purpose or by fraud
+- 69% (174,616) of the origin accounts having new balances of 0 ened up that way through Cash_Out and Transfer transaction types
+- 88% (150,954) of the destination accounts having new balances of 0 ended up that way through Payment transaction types
+- These same accounts have old and new balances equal to each other indicating to me they may be acting like pass through accounts.
+- The average transfer amount was 903,518.
+- I prefer tables when analyzing data despite most peoples preference for graphs
+
+```markdown
+df.isnull().sum()
+# no need for imputation
+id                0
+step              0
+type              0
+amount            0
+nameOrig          0
+oldbalanceOrig    0
+newbalanceOrig    0
+nameDest          0
+oldbalanceDest    0
+newbalanceDest    0
+isFraud           0
+dtype: int64
+
+pd.crosstab(df.type, df.isFraud == 1)
+# Looking at transaction types for fraudulent transactions
+isFraud|False|True
+type		
+CASH_IN|97801|0
+CASH_OUT|156358|276
+DEBIT|2933|0
+PAYMENT|150954|0
+TRANSFER|36761|300
+
 4. In step four we will aggregate the data and explore the group properties in a much more detailed manner
-
-![code](https://cloud.githubusercontent.com/assets/22734960/26037302/7595a970-38be-11e7-85fe-37c8b98739bb.jpeg)
-
 
 ## Data Preprocessing
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/hwkkix/DetectingFraud/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
