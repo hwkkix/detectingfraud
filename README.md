@@ -262,5 +262,135 @@ Feature ranking:
  
 This model did score very high on the public leaderboard putting me at the number one spot with a 0.98416!  I noticed too that of the top models on the private board this model was the only one that had a higher rating on the private board than it had on the public board with a 0.987466.  Even when the model fell from the top spot I still took pride in this fact.
 
+![features](https://cloud.githubusercontent.com/assets/22734960/26038504/dba5c5a6-38d7-11e7-82b4-869e7d628d68.png)
+
+This is very useful information and head and shoulders above that which I could pull from the Linear SVC model and coefficient measurements.  I am sure there is more out there to be had and my plan is too dig in as Linear SVC provided the sinlge best score and therefore is not something to be ignored.  My SVC model (model4) was developed aas follows:
+
+```markdown
+ptr = []
+p = []
+for i in np.logspace(-10, 2, num=15):
+    model4 = LinearSVC(C=i, random_state=0)
+    model4.fit(train[features4], train.isFraud)
+    print(70*"#")
+    trainscore = model4.score(train[features4], train.isFraud)
+    print("Model accuracy score on training data with hyperparameter of %s: %s"
+          % (i, trainscore))
+    testscore = model4.score(test[features4], test.isFraud)
+    print("Model accuracy score on test data with hyperparameter of %s: %s"
+          % (i, testscore))
+    print("Number of features in the model: {}"
+          .format(np.sum(model4.coef_ != 0)))
+    print(70*"#", "\n")
+    ptr.append(trainscore)
+    p.append(testscore)
+    # iterating on regularization hyperparameter
+    # l2 penalty is ridge regularization
+    
+    ######################################################################
+Model accuracy score on training data with hyperparameter of 1e-10: 0.998691083405
+Model accuracy score on test data with hyperparameter of 1e-10: 0.998664073397
+Number of features in the model: 63
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 7.19685673001e-10: 0.998691083405
+Model accuracy score on test data with hyperparameter of 7.19685673001e-10: 0.998664073397
+Number of features in the model: 63
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 5.17947467923e-09: 0.998691083405
+Model accuracy score on test data with hyperparameter of 5.17947467923e-09: 0.998664073397
+Number of features in the model: 63
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 3.72759372031e-08: 0.998691083405
+Model accuracy score on test data with hyperparameter of 3.72759372031e-08: 0.998664073397
+Number of features in the model: 63
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 2.68269579528e-07: 0.998691083405
+Model accuracy score on test data with hyperparameter of 2.68269579528e-07: 0.998664073397
+Number of features in the model: 63
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 1.93069772888e-06: 0.998691083405
+Model accuracy score on test data with hyperparameter of 1.93069772888e-06: 0.998664073397
+Number of features in the model: 63
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 1.38949549437e-05: 0.998691083405
+Model accuracy score on test data with hyperparameter of 1.38949549437e-05: 0.998664073397
+Number of features in the model: 61
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 0.0001: 0.998691083405
+Model accuracy score on test data with hyperparameter of 0.0001: 0.998664073397
+Number of features in the model: 54
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 0.000719685673001: 0.998695994912
+Model accuracy score on test data with hyperparameter of 0.000719685673001: 0.998673896387
+Number of features in the model: 51
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 0.00517947467923: 0.999263273961
+Model accuracy score on test data with hyperparameter of 0.00517947467923: 0.999223983812
+Number of features in the model: 48
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 0.0372759372031: 0.999280464236
+Model accuracy score on test data with hyperparameter of 0.0372759372031: 0.999253452781
+Number of features in the model: 45
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 0.268269579528: 0.999363959853
+Model accuracy score on test data with hyperparameter of 0.268269579528: 0.999322213709
+Number of features in the model: 47
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 1.93069772888: 0.999415530676
+Model accuracy score on test data with hyperparameter of 1.93069772888: 0.999351682678
+Number of features in the model: 47
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 13.8949549437: 0.999363959853
+Model accuracy score on test data with hyperparameter of 13.8949549437: 0.99930256773
+Number of features in the model: 47
+###################################################################### 
+
+######################################################################
+Model accuracy score on training data with hyperparameter of 100.0: 0.9993615041
+Model accuracy score on test data with hyperparameter of 100.0: 0.99928292175
+Number of features in the model: 46
+###################################################################### 
+```
+Iterating over my hyperparameter "C" I found my best results with a C value of around 1.9.  This turned out to be the case for both the Train and Test data sets so this pleased me very much.  Even when employing a grid search did the result change very little.  Good stuff!  The final setup for model4 is found below:
+
+```markdown
+model4 = LinearSVC(C=1.93069772888, random_state=0)
+model4.fit(train[features4], train.isFraud)
+# resetting model to current best results
+
+LinearSVC(C=1.93069772888, class_weight=None, dual=True, fit_intercept=True,
+     intercept_scaling=1, loss='squared_hinge', max_iter=1000,
+     multi_class='ovr', penalty='l2', random_state=0, tol=0.0001,
+     verbose=0)
+```
+
+The resulting coefficients are visualized as such:
+
 
 
